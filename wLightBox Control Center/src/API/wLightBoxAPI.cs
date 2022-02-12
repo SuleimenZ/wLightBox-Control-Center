@@ -14,30 +14,29 @@ namespace wLightBox_Control_Center.src
         //All API instructions are provided here https://technical.blebox.eu/openapi_wlightbox/openAPI_wLightBox_20190808.html
 
         readonly RestClient _client;
-        public wLightBoxAPI(IPAddress ip)
+        public wLightBoxAPI(string ip)
         {
-            _client = new RestClient(ip.MapToIPv4().ToString());
+            _client = new RestClient("https://" + ip + "/");
         }
 
         //
         // General
         //
-        public Task<string> GetDeviceInfo()
-            => _client.GetAsync<string>(new RestRequest("/api/device/state", Method.Get));
+        public string GetDeviceInfo()
+            => _client.ExecuteGetAsync(new RestRequest("api/device/state")).Result.Content;
+        public string GetDeviceUpTime()
+            => _client.ExecuteGetAsync(new RestRequest("api/device/uptime")).Result.Content;
 
-        public Task<string> GetDeviceUpTime()
-            => _client.GetAsync<string>(new RestRequest("/api/device/uptime", Method.Get));
-
-        public Task UpdateFirmware()
-            => _client.PostAsync<string>(new RestRequest("/api/ota/update", Method.Post));
+        public string UpdateFirmware()
+            => _client.ExecutePostAsync(new RestRequest("api/ota/update")).Result.Content;
 
         //
         //Network
         //
-        public Task<string> GetNetworkInfo()
-            => _client.GetAsync<string>(new RestRequest("/api/device/network", Method.Get));
+        public string GetNetworkInfo()
+            => _client.ExecuteGetAsync(new RestRequest("api/device/network")).Result.Content;
 
-        public Task SetAccessPoint(bool enabled, string SSID, string password)
+        public string SetAccessPoint(bool enabled, string SSID, string password)
         {
             string json = JsonConvert.SerializeObject(new
             {
@@ -45,38 +44,38 @@ namespace wLightBox_Control_Center.src
                 apSSID = SSID,
                 apPasswd = password
             });
-            var request = new RestRequest("/api/device/set", Method.Post)
+            var request = new RestRequest("/api/device/set")
                 .AddJsonBody(json);
 
-            return _client.PostAsync(request);
+            return _client.ExecutePostAsync(request).Result.Content;
         }
 
-        public Task<string> WifiScan()
-            => _client.GetAsync<string>(new RestRequest("/api/wifi/scan", Method.Get));
+        public string WifiScan()
+            => _client.ExecuteGetAsync(new RestRequest("api/wifi/scan")).Result.Content;
 
-        public Task WifiConnect(string SSID, string password)
+        public string WifiConnect(string SSID, string password)
         {
             string json = JsonConvert.SerializeObject(new
             {
                 ssid = SSID,
                 pwd = password
             });
-            var request = new RestRequest("/api/wifi/connect", Method.Post)
+            var request = new RestRequest("/api/wifi/connect")
                 .AddJsonBody(json);
 
-            return _client.PostAsync(request);
+            return _client.ExecutePostAsync(request).Result.Content;
         }
 
-        public Task WifiDisconnect(string SSID, string password)
-            => _client.GetAsync<string>(new RestRequest("/api/wifi/disconnect", Method.Post));
+        public string WifiDisconnect(string SSID, string password)
+            => _client.ExecutePostAsync(new RestRequest("api/wifi/disconnect")).Result.Content;
 
         //
         //Control & State
         //
-        public Task<string> GetLightingInfo()
-            => _client.GetAsync<string>(new RestRequest("/api/rgbw/state", Method.Get));
+        public string GetLightingInfo()
+            => _client.ExecuteGetAsync(new RestRequest("api/rgbw/state")).Result.Content;
 
-        public Task SetLightning(int effectID, string hexRGBW, int colorFadeMs = 1000, int effectFadeMs = 1500, int effectStepMs = 2000)
+        public string SetLightning(int effectID, string hexRGBW, int colorFadeMs = 1000, int effectFadeMs = 1500, int effectStepMs = 2000)
         {
             string json = JsonConvert.SerializeObject(new
             {
@@ -89,28 +88,28 @@ namespace wLightBox_Control_Center.src
                     colorStep = effectStepMs
                 })
             });
-            var request = new RestRequest("/api/rgbw/set", Method.Post)
+            var request = new RestRequest("/api/rgbw/set")
                 .AddJsonBody(json);
 
-            return _client.PostAsync(request);
+            return _client.ExecutePostAsync(request).Result.Content;
         }
 
-        public Task SetLightning(int effectID, int r, int g, int b, int w, int colorFadeMs = 1000, int effectFadeMs = 1500, int effectStepMs = 2000)
+        public string SetLightning(int effectID, int r, int g, int b, int w, int colorFadeMs = 1000, int effectFadeMs = 1500, int effectStepMs = 2000)
         {
             string hexRGBW = $"{r:X2}{g:X2}{b:X2}{w:X2}";
             return SetLightning(effectID, hexRGBW, colorFadeMs, effectFadeMs, effectStepMs);
         }
 
-        public Task<string> GetExtendedLightingInfo()
-            => _client.GetAsync<string>(new RestRequest("/api/rgbw/extended/state", Method.Get));
+        public string GetExtendedLightingInfo()
+                        => _client.ExecuteGetAsync(new RestRequest("api/rgbw/extended/state")).Result.Content;
 
         //
         //Settings
         //
-        public Task<string> GetDeviceSettings()
-            => _client.GetAsync<string>(new RestRequest("/api/settings/state", Method.Get));
+        public string GetDeviceSettings()
+            => _client.ExecuteGetAsync(new RestRequest("api/settings/state")).Result.Content;
 
-        public Task SetDeviceSettings(string name, bool tunnelEnabled, bool ledEnabled)
+        public string SetDeviceSettings(string name, bool tunnelEnabled, bool ledEnabled)
         {
             string tunnelEnabledDigit = tunnelEnabled ? "1" : "0";
             string ledEnabledDigit = ledEnabled ? "1" : "0";
@@ -126,10 +125,10 @@ namespace wLightBox_Control_Center.src
                     enabled = ledEnabledDigit
                 })
             });
-            var request = new RestRequest("/api/rgbw/set", Method.Post)
+            var request = new RestRequest("/api/rgbw/set")
                 .AddJsonBody(json);
 
-            return _client.PostAsync(request);
+            return _client.ExecutePostAsync(request).Result.Content;
         }
     }
 }

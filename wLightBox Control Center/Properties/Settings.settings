@@ -1,7 +1,27 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="wLightBox_Control_Center.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="MainBackColor" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 74, 103</Value>
+    </Setting>
+    <Setting Name="SidePanelBackColor" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">141, 181, 128</Value>
+    </Setting>
+    <Setting Name="MainPanelFont15" Type="System.Drawing.Font" Scope="Application">
+      <Value Profile="(Default)">Comic Sans MS, 15pt, style=Bold</Value>
+    </Setting>
+    <Setting Name="MainPanelFont25" Type="System.Drawing.Font" Scope="Application">
+      <Value Profile="(Default)">Comic Sans MS, 25pt, style=Bold</Value>
+    </Setting>
+    <Setting Name="ApplicationForeColor" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">221, 209, 199</Value>
+    </Setting>
+    <Setting Name="MainPanelFont40" Type="System.Drawing.Font" Scope="Application">
+      <Value Profile="(Default)">Comic Sans MS, 37pt, style=Bold</Value>
+    </Setting>
+    <Setting Name="MainPanelFont30" Type="System.Drawing.Font" Scope="Application">
+      <Value Profile="(Default)">Comic Sans MS, 30pt, style=Bold</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

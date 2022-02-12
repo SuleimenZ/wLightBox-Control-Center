@@ -9,7 +9,7 @@ using RestSharp;
 
 namespace wLightBox_Control_Center.src
 {
-    internal class wLightBoxAPI
+    public class wLightBoxAPI
     {
         //All API instructions are provided here https://technical.blebox.eu/openapi_wlightbox/openAPI_wLightBox_20190808.html
 

@@ -8,22 +8,81 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace wLightBox_Control_Center.Properties
-{
-
-
+namespace wLightBox_Control_Center.Properties {
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "11.0.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
-    {
-
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.0.3.0")]
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-
-        public static Settings Default
-        {
-            get
-            {
+        
+        public static Settings Default {
+            get {
                 return defaultInstance;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("75, 74, 103")]
+        public global::System.Drawing.Color MainBackColor {
+            get {
+                return ((global::System.Drawing.Color)(this["MainBackColor"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("141, 181, 128")]
+        public global::System.Drawing.Color SidePanelBackColor {
+            get {
+                return ((global::System.Drawing.Color)(this["SidePanelBackColor"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Comic Sans MS, 15pt, style=Bold")]
+        public global::System.Drawing.Font MainPanelFont15 {
+            get {
+                return ((global::System.Drawing.Font)(this["MainPanelFont15"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Comic Sans MS, 25pt, style=Bold")]
+        public global::System.Drawing.Font MainPanelFont25 {
+            get {
+                return ((global::System.Drawing.Font)(this["MainPanelFont25"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("221, 209, 199")]
+        public global::System.Drawing.Color ApplicationForeColor {
+            get {
+                return ((global::System.Drawing.Color)(this["ApplicationForeColor"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Comic Sans MS, 37pt, style=Bold")]
+        public global::System.Drawing.Font MainPanelFont40 {
+            get {
+                return ((global::System.Drawing.Font)(this["MainPanelFont40"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Comic Sans MS, 30pt, style=Bold")]
+        public global::System.Drawing.Font MainPanelFont30 {
+            get {
+                return ((global::System.Drawing.Font)(this["MainPanelFont30"]));
             }
         }
     }

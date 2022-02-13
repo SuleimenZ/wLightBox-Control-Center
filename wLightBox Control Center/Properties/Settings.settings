@@ -23,5 +23,8 @@
     <Setting Name="MainPanelFont30" Type="System.Drawing.Font" Scope="Application">
       <Value Profile="(Default)">Comic Sans MS, 30pt, style=Bold</Value>
     </Setting>
+    <Setting Name="ApplicationFont2" Type="System.Drawing.Font" Scope="Application">
+      <Value Profile="(Default)">Comic Sans MS, 10pt, style=Bold</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

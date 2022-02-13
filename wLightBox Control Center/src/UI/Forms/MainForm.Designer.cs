@@ -1,7 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using wLightBox_Control_Center.src;
 
 namespace wLightBox_Control_Center
@@ -36,10 +39,11 @@ namespace wLightBox_Control_Center
         {
             this.SidePanel = new System.Windows.Forms.Panel();
             this.PnlSideMain = new System.Windows.Forms.Panel();
+            this.btnNetwork = new System.Windows.Forms.Button();
             this.btnHome = new System.Windows.Forms.Button();
             this.PnlSideHeader = new System.Windows.Forms.Panel();
             this.lblName = new System.Windows.Forms.Label();
-            this.lblIP = new System.Windows.Forms.Label();
+            this.lblIp = new System.Windows.Forms.Label();
             this.pnlContainer = new System.Windows.Forms.Panel();
             this.SidePanel.SuspendLayout();
             this.PnlSideMain.SuspendLayout();
@@ -59,12 +63,34 @@ namespace wLightBox_Control_Center
             // PnlSideMain
             // 
             this.PnlSideMain.BackColor = global::wLightBox_Control_Center.Properties.Settings.Default.SidePanelBackColor;
+            this.PnlSideMain.Controls.Add(this.btnNetwork);
             this.PnlSideMain.Controls.Add(this.btnHome);
             this.PnlSideMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PnlSideMain.Location = new System.Drawing.Point(0, 150);
             this.PnlSideMain.Name = "PnlSideMain";
             this.PnlSideMain.Size = new System.Drawing.Size(228, 515);
             this.PnlSideMain.TabIndex = 1;
+            // 
+            // btnNetwork
+            // 
+            this.btnNetwork.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNetwork.BackColor = global::wLightBox_Control_Center.Properties.Settings.Default.SidePanelBackColor;
+            this.btnNetwork.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(189)))), ((int)(((byte)(149)))));
+            this.btnNetwork.FlatAppearance.BorderSize = 2;
+            this.btnNetwork.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(189)))), ((int)(((byte)(149)))));
+            this.btnNetwork.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(121)))), ((int)(((byte)(149)))), ((int)(((byte)(121)))));
+            this.btnNetwork.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNetwork.Font = global::wLightBox_Control_Center.Properties.Settings.Default.MainPanelFont25;
+            this.btnNetwork.Location = new System.Drawing.Point(0, 97);
+            this.btnNetwork.Margin = new System.Windows.Forms.Padding(15, 5, 5, 15);
+            this.btnNetwork.MinimumSize = new System.Drawing.Size(0, 69);
+            this.btnNetwork.Name = "btnNetwork";
+            this.btnNetwork.Size = new System.Drawing.Size(228, 69);
+            this.btnNetwork.TabIndex = 0;
+            this.btnNetwork.Text = "Network";
+            this.btnNetwork.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnNetwork.UseVisualStyleBackColor = false;
+            this.btnNetwork.Click += new System.EventHandler(this.NetworkButton_Click);
             // 
             // btnHome
             // 
@@ -76,8 +102,8 @@ namespace wLightBox_Control_Center
             this.btnHome.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(121)))), ((int)(((byte)(149)))), ((int)(((byte)(121)))));
             this.btnHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnHome.Font = global::wLightBox_Control_Center.Properties.Settings.Default.MainPanelFont25;
-            this.btnHome.Location = new System.Drawing.Point(0, 32);
-            this.btnHome.Margin = new System.Windows.Forms.Padding(15);
+            this.btnHome.Location = new System.Drawing.Point(0, 8);
+            this.btnHome.Margin = new System.Windows.Forms.Padding(15, 5, 5, 15);
             this.btnHome.MinimumSize = new System.Drawing.Size(0, 69);
             this.btnHome.Name = "btnHome";
             this.btnHome.Size = new System.Drawing.Size(228, 69);
@@ -89,9 +115,9 @@ namespace wLightBox_Control_Center
             // 
             // PnlSideHeader
             // 
-            this.PnlSideHeader.BackColor = global::wLightBox_Control_Center.Properties.Settings.Default.SidePanelBackColor;
+            this.PnlSideHeader.BackColor = System.Drawing.Color.Red;
             this.PnlSideHeader.Controls.Add(this.lblName);
-            this.PnlSideHeader.Controls.Add(this.lblIP);
+            this.PnlSideHeader.Controls.Add(this.lblIp);
             this.PnlSideHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.PnlSideHeader.Location = new System.Drawing.Point(0, 0);
             this.PnlSideHeader.MinimumSize = new System.Drawing.Size(228, 150);
@@ -109,19 +135,17 @@ namespace wLightBox_Control_Center
             this.lblName.Size = new System.Drawing.Size(176, 29);
             this.lblName.TabIndex = 0;
             this.lblName.Text = "Device not found";
-            this.lblName.Click += new System.EventHandler(this.label1_Click);
             // 
-            // lblIP
+            // lblIp
             // 
-            this.lblIP.AutoSize = true;
-            this.lblIP.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblIP.Font = global::wLightBox_Control_Center.Properties.Settings.Default.MainPanelFont15;
-            this.lblIP.Location = new System.Drawing.Point(0, 121);
-            this.lblIP.Name = "lblIP";
-            this.lblIP.Size = new System.Drawing.Size(175, 29);
-            this.lblIP.TabIndex = 0;
-            this.lblIP.Text = "IP: disconnected";
-            this.lblIP.Click += new System.EventHandler(this.label1_Click);
+            this.lblIp.AutoSize = true;
+            this.lblIp.BackColor = System.Drawing.Color.Red;
+            this.lblIp.Font = global::wLightBox_Control_Center.Properties.Settings.Default.MainPanelFont15;
+            this.lblIp.Location = new System.Drawing.Point(0, 115);
+            this.lblIp.Name = "lblIp";
+            this.lblIp.Size = new System.Drawing.Size(175, 29);
+            this.lblIp.TabIndex = 0;
+            this.lblIp.Text = "IP: disconnected";
             // 
             // pnlContainer
             // 
@@ -130,7 +154,6 @@ namespace wLightBox_Control_Center
             this.pnlContainer.Name = "pnlContainer";
             this.pnlContainer.Size = new System.Drawing.Size(790, 665);
             this.pnlContainer.TabIndex = 1;
-            this.pnlContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlContainer_Paint);
             // 
             // MainForm
             // 
@@ -159,35 +182,9 @@ namespace wLightBox_Control_Center
         private System.Windows.Forms.Panel PnlSideMain;
         private System.Windows.Forms.Button btnHome;
         private System.Windows.Forms.Panel pnlContainer;
-        private wLightBoxAPI api;
-
-        public void ConnectDevice(string ip = null)
-        {
-            api = api == null? new wLightBoxAPI(GetLocalIP()) : api;
-            var response = api.GetDeviceInfo();
-            if (response == null) {
-                this.lblIP.Text = "IP: disconnected";
-                this.lblName.Text = "Device not found";
-                return; 
-            }
-
-            dynamic device = JsonConvert.DeserializeObject(response);
-            this.lblIP.Text = "IP: " + device.ip;
-            this.lblName.Text = device.deviceName;
-        }
-
-        private string GetLocalIP()
-        {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach(var ip in host.AddressList)
-            {
-                if(ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork) { return ip.ToString(); }
-            }
-            return null;
-        }
-
-        private System.Windows.Forms.Label lblIP;
+        private System.Windows.Forms.Label lblIp;
         private System.Windows.Forms.Label lblName;
+        private Button btnNetwork;
     }
 }
 

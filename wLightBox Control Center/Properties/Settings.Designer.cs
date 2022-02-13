@@ -85,5 +85,14 @@ namespace wLightBox_Control_Center.Properties {
                 return ((global::System.Drawing.Font)(this["MainPanelFont30"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Comic Sans MS, 10pt, style=Bold")]
+        public global::System.Drawing.Font ApplicationFont2 {
+            get {
+                return ((global::System.Drawing.Font)(this["ApplicationFont2"]));
+            }
+        }
     }
 }

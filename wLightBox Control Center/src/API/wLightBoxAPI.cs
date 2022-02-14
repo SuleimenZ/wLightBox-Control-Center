@@ -13,9 +13,10 @@ namespace wLightBox_Control_Center.src
     public class wLightBoxAPI
     {
         //All API instructions are provided here https://technical.blebox.eu/openapi_wlightbox/openAPI_wLightBox_20190808.html
+        //Usually, in case of error, GET calls return null and POST calls return HttpStatusCode (Conflict or BadRequest)
 
         private RestClient _client;
-        private string ip;
+        public string ip { get; private set; }
         private int dataPostTimeout = 5000;
 
         public wLightBoxAPI(string ip)
@@ -171,13 +172,13 @@ namespace wLightBox_Control_Center.src
             catch (Exception) { return HttpStatusCode.BadRequest; }
         }
 
-        public HttpStatusCode WifiDisconnect(string SSID, string password)
+        public HttpStatusCode WifiDisconnect()
         {
             try { return _client.ExecutePostAsync(new RestRequest("api/wifi/disconnect")).Result.StatusCode; }
             catch (Exception) { return HttpStatusCode.BadRequest; }
         }
 
-        public async Task<HttpStatusCode> WifiDisconnectAsync(string SSID, string password)
+        public async Task<HttpStatusCode> WifiDisconnectAsync()
         {
             try { return await _client.PostJsonAsync("api/wifi/disconnect", new RestRequest()); }
             catch (Exception) { return HttpStatusCode.BadRequest; }

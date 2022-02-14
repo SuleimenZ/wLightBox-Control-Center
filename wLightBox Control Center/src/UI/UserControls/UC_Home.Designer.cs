@@ -207,6 +207,7 @@
             // 
             this.btnUpdateColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnUpdateColor.BackColor = global::wLightBox_Control_Center.Properties.Settings.Default.SidePanelBackColor;
+            this.btnUpdateColor.Enabled = false;
             this.btnUpdateColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUpdateColor.Font = global::wLightBox_Control_Center.Properties.Settings.Default.MainPanelFont15;
             this.btnUpdateColor.ForeColor = global::wLightBox_Control_Center.Properties.Settings.Default.ApplicationForeColor;
@@ -303,13 +304,13 @@
             // cmbEffect
             // 
             this.cmbEffect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cmbEffect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbEffect.Font = new System.Drawing.Font("Comic Sans MS", 11.5F, System.Drawing.FontStyle.Bold);
             this.cmbEffect.FormattingEnabled = true;
             this.cmbEffect.Location = new System.Drawing.Point(306, 491);
             this.cmbEffect.Name = "cmbEffect";
             this.cmbEffect.Size = new System.Drawing.Size(73, 29);
             this.cmbEffect.TabIndex = 4;
-            this.cmbEffect.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // lblChooseEffect
             // 

@@ -47,7 +47,7 @@ namespace wLightBox_Control_Center.src.UI.UserControls
             {
                 cmbEffect.SelectedIndex = 0;
             }
-            await Task.Run(() => UpdateUC());
+            await UpdateUC();
         }
 
         private void txtR_TextChanged(object sender, EventArgs e)
@@ -115,7 +115,7 @@ namespace wLightBox_Control_Center.src.UI.UserControls
             txtB.Text = colorDialog.Color.B.ToString();
         }
 
-        private void btnUpdateColor_Click(object sender, EventArgs e)
+        private async void btnUpdateColor_Click(object sender, EventArgs e)
         {
             if(api == null) { return; }
             int red = int.Parse(txtR.Text);
@@ -125,7 +125,9 @@ namespace wLightBox_Control_Center.src.UI.UserControls
             int colorFade = int.Parse(txtColorFade.Text);
             int effectFade = int.Parse(txtEffectFade.Text);
             int effectStep = int.Parse(txtEffectStep.Text);
-            api.SetLightning(cmbEffect.SelectedIndex, red, green, blue, white, colorFade, effectFade, effectStep);
+
+            await api.SetLightningAsync(cmbEffect.SelectedIndex, red, green, blue, white, colorFade, effectFade, effectStep);
+            await UpdateUC();
         }
 
         private void UpdateColorDialog()
@@ -138,12 +140,16 @@ namespace wLightBox_Control_Center.src.UI.UserControls
         {
             string deviceInfo = null;
             string deviceLightning = null;
+
+            //When failed to find device
             MethodInvoker Fail = delegate ()
             {
                 lblDeviceName.Text = "Device was not found";
                 lblDeviceId.Text = "";
                 btnUpdateColor.Enabled = false;
             };
+
+            //When succeed to find device
             MethodInvoker Success = delegate ()
             {
                 dynamic device = JsonConvert.DeserializeObject(deviceInfo);
@@ -157,13 +163,13 @@ namespace wLightBox_Control_Center.src.UI.UserControls
                 //Because we don't need alpha value, im using White value instead of it
                 string rgb = device.currentColor.Substring(0, 6);
                 string white = device.currentColor.Substring(6, 2);
-                string formattedColor = "#" + rgb + white;
+                string formattedColor = "#" + rgb + white;          //We end up with #RRGGBBWW value
                 Color color = ColorTranslator.FromHtml(formattedColor);
 
                 txtR.Text = color.R.ToString();
                 txtG.Text = color.G.ToString();
                 txtB.Text = color.B.ToString();
-                txtW.Text = color.A.ToString(); //Value stored in alpha goes back as White value;
+                txtW.Text = color.A.ToString();
                 txtColorFade.Text = device.durationsMs.colorFade.ToString();
                 txtEffectFade.Text = device.durationsMs.effectFade.ToString();
                 txtEffectStep.Text = device.durationsMs.effectStep.ToString();
@@ -173,7 +179,7 @@ namespace wLightBox_Control_Center.src.UI.UserControls
             if (api != null)
             {
                 deviceInfo = await api.GetDeviceInfoAsync();
-                deviceLightning = api.GetLightingInfo();
+                deviceLightning = await api.GetLightingInfoAsync();
                 if (deviceInfo != null && deviceLightning != null)
                 {
                     this.Invoke(Success);
@@ -182,11 +188,6 @@ namespace wLightBox_Control_Center.src.UI.UserControls
             }
 
             this.Invoke(Fail);
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

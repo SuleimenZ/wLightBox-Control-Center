@@ -55,6 +55,8 @@ namespace wLightBox_Control_Center
         public async void ConnectDevice(string ip = null)
         {
             ip = ip == null ? GetLocalIP() : ip;
+
+            //Change UI to show connectiong state
             MethodInvoker Connecting = delegate ()
             {
                 this.PnlSideHeader.BackColor = System.Drawing.Color.Blue;
@@ -64,6 +66,7 @@ namespace wLightBox_Control_Center
                 this.lblName.Text = "Connecting...";
             };
 
+            //Change UI to show fail state
             MethodInvoker Fail = delegate ()
             {
                 this.PnlSideHeader.BackColor = System.Drawing.Color.Red;
@@ -76,7 +79,7 @@ namespace wLightBox_Control_Center
             api = new wLightBoxAPI(ip);
 
             this.Invoke(Connecting);
-            var response = await Task.Run(() => api.GetDeviceInfoAsync());
+            var response = await api.GetDeviceInfoAsync();
 
             if (response == null)
             {
@@ -84,6 +87,8 @@ namespace wLightBox_Control_Center
                 return;
             }
             dynamic device = JsonConvert.DeserializeObject(response);
+
+            //Change UI to show success state
             MethodInvoker Success = delegate ()
             {
                 this.PnlSideHeader.BackColor = global::wLightBox_Control_Center.Properties.Settings.Default.SidePanelBackColor;

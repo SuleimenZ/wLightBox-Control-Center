@@ -248,7 +248,6 @@
             this.txtAPPassword.Location = new System.Drawing.Point(371, 401);
             this.txtAPPassword.Margin = new System.Windows.Forms.Padding(0);
             this.txtAPPassword.Name = "txtAPPassword";
-            this.txtAPPassword.PasswordChar = '*';
             this.txtAPPassword.Size = new System.Drawing.Size(100, 28);
             this.txtAPPassword.TabIndex = 0;
             this.txtAPPassword.TextChanged += new System.EventHandler(this.txtIp1_TextChanged);
@@ -307,7 +306,6 @@
             this.txtAPSsid.Location = new System.Drawing.Point(101, 401);
             this.txtAPSsid.Margin = new System.Windows.Forms.Padding(0);
             this.txtAPSsid.Name = "txtAPSsid";
-            this.txtAPSsid.PasswordChar = '*';
             this.txtAPSsid.Size = new System.Drawing.Size(100, 28);
             this.txtAPSsid.TabIndex = 0;
             this.txtAPSsid.TextChanged += new System.EventHandler(this.txtIp1_TextChanged);

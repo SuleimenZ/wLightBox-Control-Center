@@ -22,6 +22,7 @@ namespace wLightBox_Control_Center
         public MainForm()
         {
             InitializeComponent();
+            api = new wLightBoxAPI(GetLocalIP());
             Task.Run(() => ConnectDevice());
             UC_Home uc = new UC_Home(api);
             addUserControl(uc);
@@ -47,6 +48,12 @@ namespace wLightBox_Control_Center
             addUserControl(uc);
         }
 
+        private void SettingsButton_Click(object sender, EventArgs e)
+        {
+            UC_Settings uc = new UC_Settings(api);
+            addUserControl(uc);
+        }
+
         private void Uc_IpChangedEvent(object sender, string ip)
         {
             Task.Run(() => ConnectDevice(ip));
@@ -55,13 +62,15 @@ namespace wLightBox_Control_Center
         public async void ConnectDevice(string ip = null)
         {
             ip = ip == null ? GetLocalIP() : ip;
+            Task maintainUptime = MaintainUptime();
 
             //Change UI to show connectiong state
             MethodInvoker Connecting = delegate ()
             {
-                this.PnlSideHeader.BackColor = System.Drawing.Color.Blue;
-                this.lblIp.BackColor = System.Drawing.Color.Blue;
-                this.lblName.BackColor = System.Drawing.Color.Blue;
+                this.PnlSideHeader.BackColor = Color.Blue;
+                this.lblIp.BackColor = Color.Blue;
+                this.lblName.BackColor = Color.Blue;
+                this.lblUptime.BackColor = Color.Blue;
                 this.lblIp.Text = "IP: " + ip;
                 this.lblName.Text = "Connecting...";
             };
@@ -69,9 +78,10 @@ namespace wLightBox_Control_Center
             //Change UI to show fail state
             MethodInvoker Fail = delegate ()
             {
-                this.PnlSideHeader.BackColor = System.Drawing.Color.Red;
-                this.lblIp.BackColor = System.Drawing.Color.Red;
-                this.lblName.BackColor = System.Drawing.Color.Red;
+                this.PnlSideHeader.BackColor = Color.Red;
+                this.lblIp.BackColor = Color.Red;
+                this.lblName.BackColor = Color.Red;
+                this.lblUptime.BackColor = Color.Red;
                 this.lblIp.Text = "IP: disconnected";
                 this.lblName.Text = "Device not found";
             };
@@ -89,15 +99,29 @@ namespace wLightBox_Control_Center
             dynamic device = JsonConvert.DeserializeObject(response);
 
             //Change UI to show success state
-            MethodInvoker Success = delegate ()
+            MethodInvoker Success = async delegate ()
             {
-                this.PnlSideHeader.BackColor = global::wLightBox_Control_Center.Properties.Settings.Default.SidePanelBackColor;
-                this.lblIp.BackColor = global::wLightBox_Control_Center.Properties.Settings.Default.SidePanelBackColor;
-                this.lblName.BackColor = global::wLightBox_Control_Center.Properties.Settings.Default.SidePanelBackColor;
+                this.PnlSideHeader.BackColor = Properties.Settings.Default.SidePanelBackColor;
+                this.lblIp.BackColor = Properties.Settings.Default.SidePanelBackColor;
+                this.lblName.BackColor = Properties.Settings.Default.SidePanelBackColor;
+                this.lblUptime.BackColor = Properties.Settings.Default.SidePanelBackColor;
                 this.lblIp.Text = "IP: " + device.ip;
                 this.lblName.Text = device.deviceName;
+                await maintainUptime;
             };
             this.Invoke(Success);
+        }
+
+        private async Task MaintainUptime()
+        {
+            while (true)
+            {
+                Thread.Sleep(2000);
+                if (api == null) { continue; }
+                dynamic device = await api.GetDeviceUpTimeAsync();
+                if (device == null) { continue; }
+                lblUptime.Text = "Uptime: " + device.upTimeS + "s";
+            }
         }
 
         private string GetLocalIP()

@@ -39,10 +39,12 @@ namespace wLightBox_Control_Center
         {
             this.SidePanel = new System.Windows.Forms.Panel();
             this.PnlSideMain = new System.Windows.Forms.Panel();
+            this.btnSettings = new System.Windows.Forms.Button();
             this.btnNetwork = new System.Windows.Forms.Button();
             this.btnHome = new System.Windows.Forms.Button();
             this.PnlSideHeader = new System.Windows.Forms.Panel();
             this.lblName = new System.Windows.Forms.Label();
+            this.lblUptime = new System.Windows.Forms.Label();
             this.lblIp = new System.Windows.Forms.Label();
             this.pnlContainer = new System.Windows.Forms.Panel();
             this.SidePanel.SuspendLayout();
@@ -63,6 +65,7 @@ namespace wLightBox_Control_Center
             // PnlSideMain
             // 
             this.PnlSideMain.BackColor = global::wLightBox_Control_Center.Properties.Settings.Default.SidePanelBackColor;
+            this.PnlSideMain.Controls.Add(this.btnSettings);
             this.PnlSideMain.Controls.Add(this.btnNetwork);
             this.PnlSideMain.Controls.Add(this.btnHome);
             this.PnlSideMain.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -70,6 +73,27 @@ namespace wLightBox_Control_Center
             this.PnlSideMain.Name = "PnlSideMain";
             this.PnlSideMain.Size = new System.Drawing.Size(228, 515);
             this.PnlSideMain.TabIndex = 1;
+            // 
+            // btnSettings
+            // 
+            this.btnSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSettings.BackColor = global::wLightBox_Control_Center.Properties.Settings.Default.SidePanelBackColor;
+            this.btnSettings.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(189)))), ((int)(((byte)(149)))));
+            this.btnSettings.FlatAppearance.BorderSize = 2;
+            this.btnSettings.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(189)))), ((int)(((byte)(149)))));
+            this.btnSettings.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(121)))), ((int)(((byte)(149)))), ((int)(((byte)(121)))));
+            this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSettings.Font = global::wLightBox_Control_Center.Properties.Settings.Default.MainPanelFont25;
+            this.btnSettings.Location = new System.Drawing.Point(0, 228);
+            this.btnSettings.Margin = new System.Windows.Forms.Padding(15);
+            this.btnSettings.MinimumSize = new System.Drawing.Size(0, 69);
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.Size = new System.Drawing.Size(228, 69);
+            this.btnSettings.TabIndex = 0;
+            this.btnSettings.Text = "Settings";
+            this.btnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnSettings.UseVisualStyleBackColor = false;
+            this.btnSettings.Click += new System.EventHandler(this.SettingsButton_Click);
             // 
             // btnNetwork
             // 
@@ -81,8 +105,8 @@ namespace wLightBox_Control_Center
             this.btnNetwork.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(121)))), ((int)(((byte)(149)))), ((int)(((byte)(121)))));
             this.btnNetwork.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNetwork.Font = global::wLightBox_Control_Center.Properties.Settings.Default.MainPanelFont25;
-            this.btnNetwork.Location = new System.Drawing.Point(0, 97);
-            this.btnNetwork.Margin = new System.Windows.Forms.Padding(15, 5, 5, 15);
+            this.btnNetwork.Location = new System.Drawing.Point(0, 129);
+            this.btnNetwork.Margin = new System.Windows.Forms.Padding(15);
             this.btnNetwork.MinimumSize = new System.Drawing.Size(0, 69);
             this.btnNetwork.Name = "btnNetwork";
             this.btnNetwork.Size = new System.Drawing.Size(228, 69);
@@ -102,8 +126,8 @@ namespace wLightBox_Control_Center
             this.btnHome.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(121)))), ((int)(((byte)(149)))), ((int)(((byte)(121)))));
             this.btnHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnHome.Font = global::wLightBox_Control_Center.Properties.Settings.Default.MainPanelFont25;
-            this.btnHome.Location = new System.Drawing.Point(0, 8);
-            this.btnHome.Margin = new System.Windows.Forms.Padding(15, 5, 5, 15);
+            this.btnHome.Location = new System.Drawing.Point(0, 30);
+            this.btnHome.Margin = new System.Windows.Forms.Padding(15);
             this.btnHome.MinimumSize = new System.Drawing.Size(0, 69);
             this.btnHome.Name = "btnHome";
             this.btnHome.Size = new System.Drawing.Size(228, 69);
@@ -117,9 +141,11 @@ namespace wLightBox_Control_Center
             // 
             this.PnlSideHeader.BackColor = System.Drawing.Color.Red;
             this.PnlSideHeader.Controls.Add(this.lblName);
+            this.PnlSideHeader.Controls.Add(this.lblUptime);
             this.PnlSideHeader.Controls.Add(this.lblIp);
             this.PnlSideHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.PnlSideHeader.Location = new System.Drawing.Point(0, 0);
+            this.PnlSideHeader.Margin = new System.Windows.Forms.Padding(15);
             this.PnlSideHeader.MinimumSize = new System.Drawing.Size(228, 150);
             this.PnlSideHeader.Name = "PnlSideHeader";
             this.PnlSideHeader.Size = new System.Drawing.Size(228, 150);
@@ -136,12 +162,23 @@ namespace wLightBox_Control_Center
             this.lblName.TabIndex = 0;
             this.lblName.Text = "Device not found";
             // 
+            // lblUptime
+            // 
+            this.lblUptime.AutoSize = true;
+            this.lblUptime.BackColor = System.Drawing.Color.Red;
+            this.lblUptime.Font = global::wLightBox_Control_Center.Properties.Settings.Default.MainPanelFont15;
+            this.lblUptime.Location = new System.Drawing.Point(0, 118);
+            this.lblUptime.Name = "lblUptime";
+            this.lblUptime.Size = new System.Drawing.Size(121, 29);
+            this.lblUptime.TabIndex = 0;
+            this.lblUptime.Text = "Uptime: 0s";
+            // 
             // lblIp
             // 
             this.lblIp.AutoSize = true;
             this.lblIp.BackColor = System.Drawing.Color.Red;
             this.lblIp.Font = global::wLightBox_Control_Center.Properties.Settings.Default.MainPanelFont15;
-            this.lblIp.Location = new System.Drawing.Point(0, 115);
+            this.lblIp.Location = new System.Drawing.Point(0, 89);
             this.lblIp.Name = "lblIp";
             this.lblIp.Size = new System.Drawing.Size(175, 29);
             this.lblIp.TabIndex = 0;
@@ -185,6 +222,8 @@ namespace wLightBox_Control_Center
         private System.Windows.Forms.Label lblIp;
         private System.Windows.Forms.Label lblName;
         private Button btnNetwork;
+        private Label lblUptime;
+        private Button btnSettings;
     }
 }
 

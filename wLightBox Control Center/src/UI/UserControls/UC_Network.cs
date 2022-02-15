@@ -20,8 +20,8 @@ namespace wLightBox_Control_Center.src.UI.UserControls
 
         public UC_Network(wLightBoxAPI api)
         {
-            InitializeComponent();
             this.api = api;
+            InitializeComponent();
         }
 
         private async void UC_Network_Load(object sender, EventArgs e)
@@ -92,6 +92,12 @@ namespace wLightBox_Control_Center.src.UI.UserControls
 
             this.Invoke(btnOff);
             await api.WifiConnectAsync(cmbWifiList.SelectedText, txtPassword.Text);
+            string newInfo = await api.GetNetworkInfoAsync();
+            if(string.IsNullOrWhiteSpace(newInfo))
+            {
+                dynamic device = JsonConvert.DeserializeObject(newInfo);
+                if (device != null) { IpChangedEvent?.Invoke(this, device.ip); }
+            }
             this.Invoke(btnOn);
         }
 
